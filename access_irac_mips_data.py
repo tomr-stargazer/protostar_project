@@ -36,10 +36,10 @@ E09_ids['L1455-IRS 4'] = 132
 # http://simbad.u-strasbg.fr/simbad/sim-id?Ident=%40639757&Name=NAME%20LDN%201455%20IRS%201&submit=submit
 E09_ids['L1455-IRS 1'] = 130
 
+table_subset = young15_table[np.in1d(young15_table['E09'], E09_ids.values())]
+
+print table_subset
 for key, value in E09_ids.items():
 
-    table_subset = young15_table[young15_table['E09']==value]
-
-    print key, table_subset
-
+    print key, ":", value
 
