@@ -18,6 +18,7 @@ from access_irac_mips_data import E09_ids, young15_table
 cassis_data_path = os.path.expanduser("~/Documents/Data/cassis/")
 pacs_data_path = os.path.expanduser("~/Documents/Data/joelgreen_pacs/CDF_archive/IRAS03245/pacs/data")
 spire_data_path = os.path.expanduser("~/Documents/Data/joelgreen_pacs/CDF_archive/IRAS03245/spire/data")
+bolocam_data_path = os.path.expanduser("~/Documents/Data/c2d_catalog")
 
 # load the cassis data
 
@@ -27,6 +28,7 @@ pacs_table = astropy.table.Table.read(
     os.path.join(pacs_data_path, "IRAS03245_centralSpaxel_PointSourceCorrected_CorrectedYES_trim.txt"), format='ascii.basic')
 spire_table = astropy.table.Table.read(
     os.path.join(spire_data_path, "IRAS03245_spire_corrected.txt"), format='ascii.basic')
+bolocam_table = astropy.table.Table.read(os.path.join(bolocam_data_path, "bolocam_enoch06.fits.fit"))
 
 # extract the IRAC/MIPS data
 young_table_subset = young15_table[young15_table['E09'] == E09_ids['L1455-IRS 1']]
@@ -48,6 +50,12 @@ plt.plot(np.log10(irac_mips_bands_float), np.log10(irac_mips_photometry_mJy/1000
 scuba_850um = 850 # microns
 scuba_flux = 1.59 # janskys
 plt.plot(np.log10(scuba_850um), np.log10(scuba_flux), 'ms', label='SCUBA 850um (Kirk+06,07)')
+
+# Bolocam! 1.1 mm
+bolo_lambda = 1100 # microns
+bolo_flux = bolocam_table[21]['F40'] # janskys
+plt.plot(np.log10(bolo_lambda), np.log10(bolo_flux), 'co', label='Bolocam 1.1mm (Enoch+06)')
+
 
 plt.xlabel(r"log($\lambda$ / $\mu m$)", fontsize=18)
 plt.ylabel("log(Flux / Jy)", fontsize=18)
