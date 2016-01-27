@@ -1,5 +1,5 @@
 """
-We downloaded the Spitzer (CASSIS) and Herschel PACS spectra for this source.
+We downloaded the Spitzer (CASSIS) and Herschel PACS spectra for L1455-IRS 1.
 
 Let's access it.
 
