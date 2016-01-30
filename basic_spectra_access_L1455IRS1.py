@@ -3,6 +3,16 @@ We downloaded the Spitzer (CASSIS) and Herschel PACS spectra for L1455-IRS 1.
 
 Let's access it.
 
+Notes from Green+2013:
+Comparison to previous photometry in the PACS wavelength
+range is problematic. The IRAS beam was much larger, and
+MIPS data often suffered from saturation on these sources. The
+typical MIPS 70um flux density is almost always low compared
+with the PACS spectra extracted from the full array by ~20%,
+except in the brighter half of our sample, where the MIPS value
+is even lower-a factor of two-compared with the Herschel
+data.
+
 """
 
 from __future__ import division
@@ -45,6 +55,11 @@ plt.plot(np.log10(long_cassis_hires['wavelength']), np.log10(long_cassis_hires['
 plt.plot(np.log10(pacs_table['Wavelength(um)']), np.log10(pacs_table['Flux_Density(Jy)']), 'b-', label='Herschel PACS (Green+16)')
 plt.plot(np.log10(spire_table['Wavelength(u']), np.log10(spire_table['Flux_Density']), 'r-', label='Herschel SPIRE (Green+16)')
 plt.plot(np.log10(irac_mips_bands_float), np.log10(irac_mips_photometry_mJy/1000), 'rd', label='Spitzer IRAC & MIPS (Young+15)')
+
+# a hack:
+sharc_350um = 350 # microns
+sharc_flux = 13.0 # janskys
+plt.plot(np.log10(sharc_350um), np.log10(sharc_flux), 'y*', ms=10, label='SHARC 350um (Wu+07)')
 
 # a hack:
 scuba_850um = 850 # microns
