@@ -40,8 +40,8 @@ table_subset = young15_table[np.in1d(young15_table['E09'], E09_ids.values())]
 
 # only print this stuff if we're running this top-level
 if __name__ == '__main__':
-    print table_subset
+    print (table_subset)
     for key, value in E09_ids.items():
 
-        print key, ":", value
+        print (key, ":", value)
 
