@@ -12,6 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import astropy.table
+from astroquery.simbad import Simbad
 
 from access_irac_mips_data import E09_ids, young15_table
 
@@ -39,6 +40,11 @@ irac_mips_photometry_mJy = np.array([young_table_subset['F{0}'.format(x)][0] for
 fig = plt.figure()
 
 long_cassis_hires = cassis_table_hires[cassis_table_hires['wavelength'] > 14]
+
+try:
+    simbad_query = Simbad.query_object('BARN 1 IRS')
+except Exception, e:
+    raise e
 
 plt.plot(np.log10(cassis_table_lores['wavelength']), np.log10(cassis_table_lores['flux']), 'k.', label='Spitzer IRS (Cassis), low-res')
 plt.plot(np.log10(long_cassis_hires['wavelength']), np.log10(long_cassis_hires['flux']), 'g.', label='Spitzer IRS (Cassis), hi-res')
