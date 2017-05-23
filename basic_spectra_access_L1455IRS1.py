@@ -22,6 +22,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import astropy.table
+from astroquery.simbad import Simbad
 
 from access_irac_mips_data import E09_ids, young15_table
 
@@ -50,6 +51,11 @@ fig = plt.figure()
 
 long_cassis_hires = cassis_table_hires[cassis_table_hires['wavelength'] > 14]
 
+try:
+    simbad_query = Simbad.query_object('LDN 1455 IRS 1')
+except Exception as e:
+    raise e
+
 plt.plot(np.log10(cassis_table_lores['wavelength']), np.log10(cassis_table_lores['flux']), 'k.', label='Spitzer IRS (Cassis), low-res')
 plt.plot(np.log10(long_cassis_hires['wavelength']), np.log10(long_cassis_hires['flux']), 'g.', label='Spitzer IRS (Cassis), hi-res')
 plt.plot(np.log10(pacs_table['Wavelength(um)']), np.log10(pacs_table['Flux_Density(Jy)']), 'b-', label='Herschel PACS (Green+16)')
@@ -57,11 +63,13 @@ plt.plot(np.log10(spire_table['Wavelength(u']), np.log10(spire_table['Flux_Densi
 plt.plot(np.log10(irac_mips_bands_float), np.log10(irac_mips_photometry_mJy/1000), 'rd', label='Spitzer IRAC & MIPS (Young+15)')
 
 # a hack:
+# Let's replace this with real table access
 sharc_350um = 350 # microns
 sharc_flux = 13.0 # janskys
 plt.plot(np.log10(sharc_350um), np.log10(sharc_flux), 'y*', ms=10, label='SHARC 350um (Wu+07)')
 
 # a hack:
+# Let's replace this with real table access
 scuba_850um = 850 # microns
 scuba_flux = 1.59 # janskys
 plt.plot(np.log10(scuba_850um), np.log10(scuba_flux), 'ms', label='SCUBA 850um (Kirk+06,07)')
