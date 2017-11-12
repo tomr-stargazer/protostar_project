@@ -111,7 +111,7 @@ if __name__ == '__main__':
 def output_flux_for_transphere(wavelength, flux, label='', **kwargs):
     wavelength = u.Quantity(wavelength, u.um)
     flux = u.Quantity(flux, u.Jy)
-    return_string = "{0:.3f} {1:.3f} {2}".format(wavelength.to(u.um).value, flux.to(u.Jy).value, label)
+    return_string = "{0:.3f} | {1:.3f} | {2}".format(wavelength.to(u.um).value, flux.to(u.Jy).value, label)
 
     return return_string
 
@@ -123,11 +123,16 @@ def iterable_output_flux_for_transphere(wavelength_list, flux_list, label='', **
 
     return return_list
 
-print(iterable_output_flux_for_transphere((cassis_table_lores['wavelength']), (cassis_table_lores['flux']), label='Spitzer IRS (Cassis), low-res'))
-print(iterable_output_flux_for_transphere((long_cassis_hires['wavelength']), (long_cassis_hires['flux']),label='Spitzer IRS (Cassis), hi-res'))
-print(iterable_output_flux_for_transphere((pacs_table['Wavelength(um)']), (pacs_table['Flux_Density(Jy)']),label='Herschel PACS (Green+16)'))
-print(iterable_output_flux_for_transphere((spire_table['Wavelength(u']), (spire_table['Flux_Density']), label='Herschel SPIRE (Green+16)'))
-print(iterable_output_flux_for_transphere((irac_mips_bands_float), (irac_mips_photometry_mJy/1000), label='Spitzer IRAC & MIPS (Young+15)'))
-print(output_flux_for_transphere((sharc_350um), (sharc_flux), label='SHARC 350um (Wu+07)'))
-print(output_flux_for_transphere((scuba_850um), (scuba_flux), label='SCUBA 850um (Kirk+06,07)'))
-print(output_flux_for_transphere((bolo_lambda), (bolo_flux), label='Bolocam 1.1mm (Enoch+06)'))
+def listprint(a_list):
+    for x in a_list:
+        print(x)
+
+if __name__ == '__main__':
+    listprint(iterable_output_flux_for_transphere((cassis_table_lores['wavelength']), (cassis_table_lores['flux']), label='Spitzer IRS (Cassis), low-res'))
+    listprint(iterable_output_flux_for_transphere((long_cassis_hires['wavelength']), (long_cassis_hires['flux']),label='Spitzer IRS (Cassis), hi-res'))
+    listprint(iterable_output_flux_for_transphere((pacs_table['Wavelength(um)']), (pacs_table['Flux_Density(Jy)']),label='Herschel PACS (Green+16)'))
+    listprint(iterable_output_flux_for_transphere((spire_table['Wavelength(u']), (spire_table['Flux_Density']), label='Herschel SPIRE (Green+16)'))
+    listprint(iterable_output_flux_for_transphere((irac_mips_bands_float), (irac_mips_photometry_mJy/1000), label='Spitzer IRAC & MIPS (Young+15)'))
+    print(output_flux_for_transphere((sharc_350um), (sharc_flux), label='SHARC 350um (Wu+07)'))
+    print(output_flux_for_transphere((scuba_850um), (scuba_flux), label='SCUBA 850um (Kirk+06,07)'))
+    print(output_flux_for_transphere((bolo_lambda), (bolo_flux), label='Bolocam 1.1mm (Enoch+06)'))
