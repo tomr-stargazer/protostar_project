@@ -54,8 +54,6 @@ irac_mips_bands = ['3.6', '4.5', '5.8', '8.0', '24', '70']
 irac_mips_bands_float = np.array([float(x) for x in irac_mips_bands])
 irac_mips_photometry_mJy = np.array([young_table_subset['F{0}'.format(x)][0] for x in irac_mips_bands])
 
-fig = plt.figure()
-
 long_cassis_hires = cassis_table_hires[cassis_table_hires['wavelength'] > 14]
 
 try:
@@ -71,39 +69,42 @@ def plot_nuFnu_vs_wavelength(wavelength_array, jansky_array, fmt=None, **kwargs)
     return plt.plot(wavelength_array, nuFnu_array.to(u.erg/u.s/u.cm**2).value, fmt, **kwargs)
 
 
-plot_nuFnu_vs_wavelength((cassis_table_lores['wavelength']), (cassis_table_lores['flux']), 'k.', ms=2, label='Spitzer IRS (Cassis), low-res')
-plot_nuFnu_vs_wavelength((long_cassis_hires['wavelength']), (long_cassis_hires['flux']), 'g.', ms=2, label='Spitzer IRS (Cassis), hi-res')
-plot_nuFnu_vs_wavelength((pacs_table['Wavelength(um)']), (pacs_table['Flux_Density(Jy)']), 'b-', lw=1, label='Herschel PACS (Green+16)')
-plot_nuFnu_vs_wavelength((spire_table['Wavelength(u']), (spire_table['Flux_Density']), 'r-', lw=1, label='Herschel SPIRE (Green+16)')
-plot_nuFnu_vs_wavelength((irac_mips_bands_float), (irac_mips_photometry_mJy/1000), 'rd', label='Spitzer IRAC & MIPS (Young+15)')
+if __name__ == '__main__':
+    fig = plt.figure()
 
-# a hack:
-# Let's replace this with real table access
-sharc_350um = 350 # microns
-sharc_flux = 13.0 # janskys
-plot_nuFnu_vs_wavelength((sharc_350um), (sharc_flux), 'y*', ms=10, label='SHARC 350um (Wu+07)')
+    plot_nuFnu_vs_wavelength((cassis_table_lores['wavelength']), (cassis_table_lores['flux']), 'k.', ms=2, label='Spitzer IRS (Cassis), low-res')
+    plot_nuFnu_vs_wavelength((long_cassis_hires['wavelength']), (long_cassis_hires['flux']), 'g.', ms=2, label='Spitzer IRS (Cassis), hi-res')
+    plot_nuFnu_vs_wavelength((pacs_table['Wavelength(um)']), (pacs_table['Flux_Density(Jy)']), 'b-', lw=1, label='Herschel PACS (Green+16)')
+    plot_nuFnu_vs_wavelength((spire_table['Wavelength(u']), (spire_table['Flux_Density']), 'r-', lw=1, label='Herschel SPIRE (Green+16)')
+    plot_nuFnu_vs_wavelength((irac_mips_bands_float), (irac_mips_photometry_mJy/1000), 'rd', label='Spitzer IRAC & MIPS (Young+15)')
 
-# a hack:
-# Let's replace this with real table access
-scuba_850um = 850 # microns
-scuba_flux = 1.59 # janskys
-plot_nuFnu_vs_wavelength((scuba_850um), (scuba_flux), 'ms', label='SCUBA 850um (Kirk+06,07)')
+    # a hack:
+    # Let's replace this with real table access
+    sharc_350um = 350 # microns
+    sharc_flux = 13.0 # janskys
+    plot_nuFnu_vs_wavelength((sharc_350um), (sharc_flux), 'y*', ms=10, label='SHARC 350um (Wu+07)')
 
-# Bolocam! 1.1 mm
-bolo_lambda = 1100 # microns
-bolo_flux = bolocam_table[21]['F40'] # janskys
-plot_nuFnu_vs_wavelength((bolo_lambda), (bolo_flux), 'co', label='Bolocam 1.1mm (Enoch+06)')
+    # a hack:
+    # Let's replace this with real table access
+    scuba_850um = 850 # microns
+    scuba_flux = 1.59 # janskys
+    plot_nuFnu_vs_wavelength((scuba_850um), (scuba_flux), 'ms', label='SCUBA 850um (Kirk+06,07)')
 
-plt.loglog()
-plt.xlabel(r"$\lambda$ ($\mu m$)", fontsize=15, family='serif')
-plt.ylabel(r"$\nu F_\nu$ (erg$\cdot$s$^{-1}\cdot$cm$^{-2}$)", fontsize=15, family='serif')
+    # Bolocam! 1.1 mm
+    bolo_lambda = 1100 # microns
+    bolo_flux = bolocam_table[21]['F40'] # janskys
+    plot_nuFnu_vs_wavelength((bolo_lambda), (bolo_flux), 'co', label='Bolocam 1.1mm (Enoch+06)')
 
-plt.title("SED of L1455-IRS 1", fontsize=18, family='serif')
-plt.legend(loc='lower right')
+    plt.loglog()
+    plt.xlabel(r"$\lambda$ ($\mu m$)", fontsize=15, family='serif')
+    plt.ylabel(r"$\nu F_\nu$ (erg$\cdot$s$^{-1}\cdot$cm$^{-2}$)", fontsize=15, family='serif')
 
-plt.savefig("L1455IRS1_SED_nuFnu.png", bbox_inches='tight')
+    plt.title("SED of L1455-IRS 1", fontsize=18, family='serif')
+    plt.legend(loc='lower right')
 
-plt.show()
+    plt.savefig("L1455IRS1_SED_nuFnu.png", bbox_inches='tight')
+
+    plt.show()
 
 
 
