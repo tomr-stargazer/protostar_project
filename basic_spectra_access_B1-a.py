@@ -57,11 +57,6 @@ scuba_850um = 850 # microns
 scuba_flux = 9.92 # janskys
 plt.plot(np.log10(scuba_850um), np.log10(scuba_flux), 'ms', label='SCUBA 850um (Kirk+06,07)')
 
-# Bolocam! 1.1 mm
-# bolo_lambda = 1100 # microns
-# bolo_flux = bolocam_table[21]['F40'] # janskys
-# plt.plot(np.log10(bolo_lambda), np.log10(bolo_flux), 'co', label='Bolocam 1.1mm (Enoch+06)')
-
 
 plt.xlabel(r"log($\lambda$ / $\mu m$)", fontsize=18)
 plt.ylabel("log(Flux / Jy)", fontsize=18)
