@@ -43,7 +43,7 @@ long_cassis_hires = cassis_table_hires[cassis_table_hires['wavelength'] > 14]
 
 try:
     simbad_query = Simbad.query_object('BARN 1 IRS')
-except Exception, e:
+except Exception as e:
     raise e
 
 plt.plot(np.log10(cassis_table_lores['wavelength']), np.log10(cassis_table_lores['flux']), 'k.', label='Spitzer IRS (Cassis), low-res')
