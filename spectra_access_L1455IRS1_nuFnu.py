@@ -63,41 +63,40 @@ try:
 except Exception as e:
     raise e
 
-def plot_log_nuFnu_vs_log_wavelength(wavelength_array, jansky_array, fmt=None, **kwargs):
+def plot_nuFnu_vs_wavelength(wavelength_array, jansky_array, fmt=None, **kwargs):
 
     jansky_array = u.Quantity(jansky_array, unit=u.Jy)
-
     nuFnu_array = jansky_array * wavelength_to_freq(wavelength_array)*u.Hz
-    
 
-    return plt.plot(np.log10(wavelength_array), np.log10(nuFnu_array.to(u.erg/u.s/u.cm**2).value), fmt, **kwargs)
+    return plt.plot(wavelength_array, nuFnu_array.to(u.erg/u.s/u.cm**2).value, fmt, **kwargs)
 
-plot_log_nuFnu_vs_log_wavelength((cassis_table_lores['wavelength']), (cassis_table_lores['flux']), 'k.', ms=2, label='Spitzer IRS (Cassis), low-res')
-plot_log_nuFnu_vs_log_wavelength((long_cassis_hires['wavelength']), (long_cassis_hires['flux']), 'g.', ms=2, label='Spitzer IRS (Cassis), hi-res')
-plot_log_nuFnu_vs_log_wavelength((pacs_table['Wavelength(um)']), (pacs_table['Flux_Density(Jy)']), 'b-', lw=1, label='Herschel PACS (Green+16)')
-plot_log_nuFnu_vs_log_wavelength((spire_table['Wavelength(u']), (spire_table['Flux_Density']), 'r-', lw=1, label='Herschel SPIRE (Green+16)')
-plot_log_nuFnu_vs_log_wavelength((irac_mips_bands_float), (irac_mips_photometry_mJy/1000), 'rd', label='Spitzer IRAC & MIPS (Young+15)')
+
+plot_nuFnu_vs_wavelength((cassis_table_lores['wavelength']), (cassis_table_lores['flux']), 'k.', ms=2, label='Spitzer IRS (Cassis), low-res')
+plot_nuFnu_vs_wavelength((long_cassis_hires['wavelength']), (long_cassis_hires['flux']), 'g.', ms=2, label='Spitzer IRS (Cassis), hi-res')
+plot_nuFnu_vs_wavelength((pacs_table['Wavelength(um)']), (pacs_table['Flux_Density(Jy)']), 'b-', lw=1, label='Herschel PACS (Green+16)')
+plot_nuFnu_vs_wavelength((spire_table['Wavelength(u']), (spire_table['Flux_Density']), 'r-', lw=1, label='Herschel SPIRE (Green+16)')
+plot_nuFnu_vs_wavelength((irac_mips_bands_float), (irac_mips_photometry_mJy/1000), 'rd', label='Spitzer IRAC & MIPS (Young+15)')
 
 # a hack:
 # Let's replace this with real table access
 sharc_350um = 350 # microns
 sharc_flux = 13.0 # janskys
-plot_log_nuFnu_vs_log_wavelength((sharc_350um), (sharc_flux), 'y*', ms=10, label='SHARC 350um (Wu+07)')
+plot_nuFnu_vs_wavelength((sharc_350um), (sharc_flux), 'y*', ms=10, label='SHARC 350um (Wu+07)')
 
 # a hack:
 # Let's replace this with real table access
 scuba_850um = 850 # microns
 scuba_flux = 1.59 # janskys
-plot_log_nuFnu_vs_log_wavelength((scuba_850um), (scuba_flux), 'ms', label='SCUBA 850um (Kirk+06,07)')
+plot_nuFnu_vs_wavelength((scuba_850um), (scuba_flux), 'ms', label='SCUBA 850um (Kirk+06,07)')
 
 # Bolocam! 1.1 mm
 bolo_lambda = 1100 # microns
 bolo_flux = bolocam_table[21]['F40'] # janskys
-plot_log_nuFnu_vs_log_wavelength((bolo_lambda), (bolo_flux), 'co', label='Bolocam 1.1mm (Enoch+06)')
+plot_nuFnu_vs_wavelength((bolo_lambda), (bolo_flux), 'co', label='Bolocam 1.1mm (Enoch+06)')
 
-
-plt.xlabel(r"log($\lambda$ / $\mu m$)", fontsize=15, family='serif')
-plt.ylabel(r"log($\nu F_\nu$ / erg$\cdot$s$^{-1}\cdot$cm$^{-2}$)", fontsize=15, family='serif')
+plt.loglog()
+plt.xlabel(r"$\lambda$ ($\mu m$)", fontsize=15, family='serif')
+plt.ylabel(r"$\nu F_\nu$ (erg$\cdot$s$^{-1}\cdot$cm$^{-2}$)", fontsize=15, family='serif')
 
 plt.title("SED of L1455-IRS 1", fontsize=18, family='serif')
 plt.legend(loc='lower right')
